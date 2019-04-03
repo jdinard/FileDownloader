@@ -26,20 +26,20 @@ RUN go get github.com/golang/protobuf/ptypes
 # get realize for hotloading
 RUN go get github.com/oxequa/realize
 
-# protobuf generators, this is where we actually use protoc that we installed earlier to generate the go gRPC code
-RUN mkdir ../../../src/calendar
-COPY ./protobufs ./protobufs
-
-# Generate the gRPC interface that we will write an implementation for in our go code
-RUN protoc -I=./protobufs cache.proto --go_out=plugins=grpc:../../../src/scheduling
-
 # get an initial copy of our application files over
 COPY ./ConflictService/app /go/src/conflictservice/app
 
-# copy our implementation of the golang interface we just generated with protoc
+# copy our implementation of the golang interface
 COPY ./ConflictService/app/pkg/calendar /go/src/calendar
 
-WORKDIR /go/src/calendar/app
+WORKDIR /go/src/conflictservice/app
+
+# protobuf generators, this is where we actually use protoc that we installed earlier to generate the go gRPC code
+COPY ./protobufs ./protobufs
+
+# Generate the gRPC interface that we will write an implementation for in our go code
+RUN mkdir ../../../src/scheduling
+RUN protoc -I=./protobufs calendar.proto --go_out=plugins=grpc:../../../src/scheduling
 
 # Development entrypoint
 ENTRYPOINT ./start.sh
