@@ -26,6 +26,26 @@ func TestSortEventList(t *testing.T) {
 		Start: TimestampProto(time.Now().Add(-5 * time.Hour)),
 		End:   TimestampProto(time.Now())})
 
+	// Create an event that starts a 8 hours ago and ends now
+	testEvents = append(testEvents, &protobufs.Event{
+		Start: TimestampProto(time.Now().Add(-8 * time.Hour)),
+		End:   TimestampProto(time.Now())})
+
+	// Create an event that starts a 3 hours ago and ends now
+	testEvents = append(testEvents, &protobufs.Event{
+		Start: TimestampProto(time.Now().Add(-3 * time.Hour)),
+		End:   TimestampProto(time.Now())})
+
+	// Create an event that starts a 2 hours ago and ends now
+	testEvents = append(testEvents, &protobufs.Event{
+		Start: TimestampProto(time.Now().Add(-2 * time.Hour)),
+		End:   TimestampProto(time.Now())})
+
+	// Create an event that starts a 1 hour ago and ends now
+	testEvents = append(testEvents, &protobufs.Event{
+		Start: TimestampProto(time.Now().Add(-1 * time.Hour)),
+		End:   TimestampProto(time.Now())})
+
 	// Sort them
 	sortedEvents := sortEventList(testEvents)
 
@@ -39,6 +59,7 @@ func TestSortEventList(t *testing.T) {
 	}
 }
 
+// Helper function for the unit test
 func TimestampProto(t time.Time) *protoTime.Timestamp {
 	ts := &protoTime.Timestamp{
 		Seconds: t.Unix(),

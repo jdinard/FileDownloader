@@ -15,14 +15,13 @@ message EventList {
     repeated Event events = 1;
 }
 
-message ConflictPair {
-    Event EventOne = 1;
-    Event EventTwo = 2;
+message ConflictGroup {
+    repeated Event conflict_group = 1;
 }
 
 // gRPC messages must be a single message, a return cannot be a list of messages (if you wish to do that, you can use a gRPC stream)
 message ConflictList {
-    repeated ConflictPair conflicts = 1;
+    repeated ConflictGroup conflicts = 1;
 }
 
 service ConflictService {
