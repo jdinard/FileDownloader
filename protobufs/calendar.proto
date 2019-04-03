@@ -1,0 +1,31 @@
+syntax = "proto3";
+package Scheduling;
+
+import "google/protobuf/timestamp.proto";
+
+message Event {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    google.protobuf.Timestamp start = 4;
+    google.protobuf.Timestamp end = 5;
+}
+
+message EventList {
+    repeated Event events = 1;
+}
+
+message ConflictPair {
+    Event EventOne = 1;
+    Event EventTwo = 2;
+}
+
+// gRPC messages must be a single message, a return cannot be a list of messages (if you wish to do that, you can use a gRPC stream)
+message ConflictList {
+    repeated ConflictPair conflicts = 1;
+}
+
+service ConflictService {
+    // Instead of returning a conflict list as one return, we could be a bit more efficient and return a stream, and stream the conflict pairs back as we identify them
+    rpc GetConflicts (EventList) returns (ConflictList) {}
+}

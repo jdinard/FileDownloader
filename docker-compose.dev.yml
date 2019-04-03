@@ -1,0 +1,18 @@
+version: '3.4'
+services:
+  conflictservice:
+    image: conflictservice
+    ports:
+      - 7020:7020
+      - 7777:7777
+    env_file:
+      - ./environment/conflictService.env
+    # Manipulate volume mounts to make it easy to hot reload the protobuf files, and main application file
+    volumes:
+      - ./ConflictService/app:/go/src/conflictservice/app
+      - ./ConflictService/app/pkg/calendar:/go/src/calendar
+    build:
+      context: .
+      # For development, we just want to run the build-env step of the image, this be pretty big, about 1gb
+      target: build-env
+      dockerfile: ConflictService/Dockerfile

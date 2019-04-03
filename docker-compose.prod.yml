@@ -1,0 +1,9 @@
+version: '3.4'
+services:
+  conflictservice:
+    image: conflictservice
+    build:
+      context: .
+      # For production, lets target the dockerfile's production container (it should be less than 4mb)
+      target: production
+      dockerfile: ConflictService/Dockerfile
