@@ -52,7 +52,7 @@ func getConflictGroups(eventList *protobufs.EventList) *protobufs.ConflictList {
 			}
 
 			// Make sure the end time is always the latest end time, this will handle cases where event B ends before event A but event A still conflicts with event C
-			endTime = Max(endTime, events[i].End.Seconds)
+			endTime = max(endTime, events[i].End.Seconds)
 			tmpConflictGroup.ConflictGroup = append(tmpConflictGroup.ConflictGroup, events[i])
 		}
 
@@ -65,7 +65,7 @@ func getConflictGroups(eventList *protobufs.EventList) *protobufs.ConflictList {
 	return conflictList
 }
 
-func Max(a, b int64) int64 {
+func max(a, b int64) int64 {
 	if a < b {
 		return b
 	}
