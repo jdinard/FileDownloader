@@ -2,7 +2,6 @@ package calendar
 
 import (
 	"context"
-	"fmt"
 	protobufs "scheduling"
 	"sort"
 )
@@ -39,9 +38,6 @@ func getConflictGroups(eventList *protobufs.EventList) *protobufs.ConflictList {
 		tmpConflictGroup.ConflictGroup = append(tmpConflictGroup.ConflictGroup, events[0])
 
 		for i := 1; i < numEvents; i++ {
-			fmt.Println(events[i].Start.Seconds)
-			fmt.Println(endTime)
-
 			// Is the start time of the current event, after the end time of the previous longest ending event
 			if events[i].Start.Seconds >= endTime {
 				// If it is, then we do not have a conflict
@@ -64,8 +60,6 @@ func getConflictGroups(eventList *protobufs.EventList) *protobufs.ConflictList {
 		if len(tmpConflictGroup.ConflictGroup) > 1 {
 			conflictList.Conflicts = append(conflictList.Conflicts, tmpConflictGroup)
 		}
-
-		fmt.Println(len(tmpConflictGroup.ConflictGroup))
 	}
 
 	return conflictList

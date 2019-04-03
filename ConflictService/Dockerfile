@@ -43,3 +43,20 @@ RUN protoc -I=./protobufs calendar.proto --go_out=plugins=grpc:../../../src/sche
 
 # Development entrypoint
 ENTRYPOINT ./start.sh
+
+# Only for production, we could skip this in development by just passing an arg to the dockerfile
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -a -installsuffix cgo -o conflictservice .
+
+FROM gruebel/upx:latest AS upx
+COPY --from=build-env /go/src/conflictservice/app/conflictservice /conflictservice
+RUN upx --best --lzma -o /conflictservice_c /conflictservice
+
+FROM alpine:latest AS certs
+RUN apk --update add ca-certificates
+
+# Create a super tiny docker scratch container that should be less than 3 megabytes for production deployment
+FROM scratch AS production
+ENV PATH=/bin
+COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=upx /conflictservice_c .
+CMD ["./conflictservice_c"]
