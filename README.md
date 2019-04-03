@@ -54,7 +54,7 @@ spec:
   type: NodePort
   ports:
   - port: 443
-    targetPort: 8443
+    targetPort: 7070
     protocol: TCP
     name: double-booked-port
   selector:
