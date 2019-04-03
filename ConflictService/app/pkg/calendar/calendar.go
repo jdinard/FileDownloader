@@ -2,7 +2,6 @@ package calendar
 
 import (
 	"context"
-	"fmt"
 	protobufs "scheduling"
 	"sort"
 )
@@ -26,22 +25,18 @@ func (s *Server) GetConflicts(ctx context.Context, eventList *protobufs.EventLis
 
 func getConflictPairs(eventList *protobufs.EventList) *protobufs.ConflictList {
 	//First step, sort them in nlogn time by start time
-	_ = sortEventList(eventList)
+	_ = sortEventList(eventList.Events)
 
 	//Next step, just iterate down the events checking to see if the end time of n is at or after the start time of n + 1
 
 	return &protobufs.ConflictList{}
 }
 
-func sortEventList(eventList *protobufs.EventList) []*protobufs.Event {
-	events := eventList.Events
-
-	// Go's built in sort, sort's in nLogn time..
+func sortEventList(events []*protobufs.Event) []*protobufs.Event {
+	// Go's built in sort, sorts in nLogn time..
 	sort.Slice(events, func(a, b int) bool {
-		return events[a].Start.Nanos < events[b].Start.Nanos
+		return events[a].Start.Nanos > events[b].Start.Nanos
 	})
-
-	fmt.Println(events)
 
 	return events
 }
