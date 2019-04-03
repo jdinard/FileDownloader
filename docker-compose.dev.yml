@@ -4,7 +4,7 @@ services:
     image: conflictservice
     ports:
       - 7020:7020
-      - 7777:7777
+      - 8080:8080
     env_file:
       - ./environment/conflictService.env
     # Manipulate volume mounts to make it easy to hot reload the protobuf files, and main application file
