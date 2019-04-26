@@ -8,6 +8,9 @@ schema:
   commands:
     run:
       status: true
+  args:
+    # This is for development only. When using the container labelled as final, realize isn't loaded and won't pass this in
+    - --source_url="http://f39bf6aa.bwtest-aws.pravala.com/384MB.jar"
   watcher:
     extensions:
     - go

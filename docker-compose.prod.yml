@@ -1,9 +1,9 @@
 version: '3.4'
 services:
-  conflictservice:
-    image: conflictservice
+  filedownloader:
+    image: filedownloader
     build:
       context: .
-      # For production, lets target the dockerfile's production container (it should be less than 3mb)
-      target: production
-      dockerfile: ConflictService/Dockerfile
+      # For production, lets target the dockerfile's final container
+      target: final
+      dockerfile: FileDownloader/Dockerfile
