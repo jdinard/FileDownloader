@@ -15,9 +15,11 @@ Building the application is all taken care of by docker, just run
 This will build a production container named filedownloader, which you can then run (it will only be about 10.6mb).
 
 After building the container, open an interactive shell with the container:
+
 `docker run -it filedownloader`
 
 Then you can immediately start using the filedownloader application, for example by running:
+
 `./filedownloader --source_url=http://f39bf6aa.bwtest-aws.pravala.com/384MB.jar`
 
 or
@@ -31,6 +33,7 @@ Note: The container is based on alpine
 Building the container for development will boot up a docker container that contains realize for hotloading. This container will be much larger, about 1GB.
 
 You can boot the container into a development environment with
+
 `docker-compose -f docker-compose.dev.yml up --build`
 
 Please note that when in development/hotloading mode, arguments that get passed to the go program are defined in the .realize.yaml file. For hotloading to work, make sure you've enabled shared drives with docker.
