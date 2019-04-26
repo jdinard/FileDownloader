@@ -8,6 +8,9 @@ schema:
   commands:
     run:
       status: true
+  args:
+    # This is only for development purposes, the production container doesn't contain realize
+  - --source_url="http://f39bf6aa.bwtest-aws.pravala.com/384MB.jar"
   watcher:
     extensions:
     - go
