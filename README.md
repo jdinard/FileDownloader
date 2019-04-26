@@ -48,4 +48,4 @@ You should now see the results of unit tests, in teamcity report format, outputt
 
 ## Assumptions
 - Passing around a few dockerfiles is much easier than passing around/sharing uncompiled go code
-- The binary that the docker container produces is specifically compiled for linux
+- The binary that the docker container produces is specifically compiled for linux, and will only be run on linux
