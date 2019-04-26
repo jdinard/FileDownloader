@@ -4,8 +4,14 @@ services:
     image: filedownloader
     # Manipulate volume mounts to make it easy to hot reload the protobuf files, and main application file
     volumes:
-      - ./FileDownloader/app:/go/src/FileDownloader/app
+      - ./FileDownloader/app:/go/src/filedownloader/app
+      - ./FileDownloader/app/pkg/downloader:/go/src/downloader
+    # Uncomment this to print teamcity tests
+    # environment:
+    #   - TEST=1
     build:
+      args:
+      - cmd_args="--source_url=http://f39bf6aa.bwtest-aws.pravala.com/384MB.jar"
       context: .
       # For development, we just want to run the build-env step of the image, this be pretty big, about 1gb
       target: build-env

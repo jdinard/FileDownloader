@@ -1,17 +1,24 @@
 package main
 
 import (
+	"downloader"
+	"flag"
 	"fmt"
-	"os"
 )
 
 func main() {
-	if len(os.Args) == 0 {
-		fmt.Println("There are no arguments")
+	// Use the golang flag package to get command line arguments, set defaults, and support standard things like usage/help
+	remoteURL := *flag.String("source_url:", "", "a fully qualified URL of the file to download")
+	outfile := *flag.String("output_file:", "file.out", "The name of the file to output to")
+	numberOfChunks := *flag.Int("num_chunks:", 4, "The number of file chunks to download")
+	chunkSize := *flag.Int("chunk_size:", 1048576, "The size of the chunks to download")
+	flag.Parse()
+
+	//Has to at least have http://a.a
+	if len(remoteURL) < 9 {
+		fmt.Println("You must specify the source Url with the argument -source_url=<url>")
 	} else {
-		fmt.Println("Args", len(os.Args))
-		for _, val := range os.Args[1:] {
-			fmt.Println(val)
-		}
+		// Download the file in chunks
+		downloader.DownloadFileInChunks(numberOfChunks, chunkSize, remoteURL, outfile)
 	}
 }
