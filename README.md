@@ -1,6 +1,5 @@
 # FileDownloader
-
-A command line utility written in Go for download the first N chunks of a remote file in parallel. 
+A command line utility written in Go for downloading the first N chunks of a remote file in parallel. 
 
 In order to avoid having to deal with issues like versions of Go and GO_PATH/GO_ROUTE setups, I've dockerized the utility.
 
